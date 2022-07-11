@@ -62,36 +62,16 @@ def load_data(data_path ,implicit=True):
 3
 def eval_explicit(model, train_data, test_data):
     rmse_list = []
-    if 'Item' in model.__class__.__name__:
-        num_users, num_items = train_data.shape
-        pred_matrix = np.zeros((num_users, num_items))
+   
+    for user_id in range(len(train_data)):
+        test_by_user = test_data[user_id]
+        target_u = np.where(test_by_user >= 0.5)[0]
+        target_u_score = test_by_user[target_u]
 
-        for item_id in range(len(train_data.T)):
-            train_by_item = test_data[:, item_id]
-            missing_user_ids = np.where(train_by_item >= 0.5)[0]
+        pred_u_score = model.predict(user_id, target_u) # target_u에 아이템들 
 
-            pred_u_score = model.predict(item_id, missing_user_ids)
-            pred_matrix[missing_user_ids, item_id] = pred_u_score
-
-        for user_id in range(len(train_data)):
-            test_by_user = test_data[user_id]
-            target_u = np.where(test_by_user >= 0.5)[0]
-            target_u_score = test_by_user[target_u]
-
-            pred_u_score = pred_matrix[user_id, target_u]
-
-            rmse = mean_squared_error(target_u_score, pred_u_score)
-            rmse_list.append(rmse)
-    else:
-        for user_id in range(len(train_data)):
-            test_by_user = test_data[user_id]
-            target_u = np.where(test_by_user >= 0.5)[0]
-            target_u_score = test_by_user[target_u]
-
-            pred_u_score = model.predict(user_id, target_u) # target_u에 아이템들 
-
-            # RMSE 계산
-            rmse = mean_squared_error(target_u_score, pred_u_score)
-            rmse_list.append(rmse)
+        # RMSE 계산
+        rmse = mean_squared_error(target_u_score, pred_u_score)
+        rmse_list.append(rmse)
 
     return np.mean(rmse_list)

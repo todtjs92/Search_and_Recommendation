@@ -34,9 +34,9 @@ class UserCF():
 
                 dot_a_b = np.dot(a, b)
                 if dot_a_b == 0:
-                    user_user_sim_matrix[user_i, user_j] = dot_a_b
-                else:
-                    user_user_sim_matrix[user_i, user_j] = dot_a_b / (np.linalg.norm(a) * np.linalg.norm(b))
+                    continue
+            
+                user_user_sim_matrix[user_i, user_j] = dot_a_b / (np.linalg.norm(a) * np.linalg.norm(b))
 
         self.user_user_sim_matrix = (user_user_sim_matrix + user_user_sim_matrix.T)
         
