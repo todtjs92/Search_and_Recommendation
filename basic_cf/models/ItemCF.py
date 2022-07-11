@@ -1,6 +1,6 @@
 import numpy as np
 
-class ItemKNN_explicit():
+class ItemCF():
     def __init__(self, train, valid, top_k):
         self.train = train
         self.valid = valid
