@@ -68,7 +68,8 @@ class UserCF():
             else:
                 users_rate = self.train[top_k_users, one_missing_item]
                 users_sim = self.user_user_sim_matrix[user_id, top_k_users]
-
+                
+                users_sim[users_sim < 0.0] = 0.0 
                 
                 if np.sum(users_sim) == 0.0:
                     predicted_rate = self.user_mean[user_id]

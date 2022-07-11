@@ -59,7 +59,7 @@ def load_data(data_path ,implicit=True):
     return train.toarray(), valid.toarray(), test.toarray()
     
 
-3
+
 def eval_explicit(model, train_data, test_data):
     rmse_list = []
    
