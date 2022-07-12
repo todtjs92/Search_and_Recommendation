@@ -50,8 +50,7 @@ if __name__ == '__main__':
     """
     
     print("model evaluation")
-    userknn_rmse = eval_explicit(usercf, train_data+valid_data, test_data)
+    usercf_rmse = eval_explicit(usercf, train_data+valid_data, test_data)
    
     print("RMSE on Test Data")
-    print("UserCF: %f"%(userknn_rmse))
-    # print("ItemKNN: %f"%(itemknn_rmse))
+    print("UserCF: %f"%(usercf_rmse))
